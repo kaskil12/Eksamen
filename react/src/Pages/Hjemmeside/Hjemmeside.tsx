@@ -8,7 +8,7 @@ const Item = ({ item, onLoanOut, onReturn }: { item: any, onLoanOut: (id: number
       <p><strong>Spesifikasjoner:</strong> {item.Spesifikasjoner}</p>
       <p><strong>Innkjøpsdato:</strong> {item.Innkjopsdato}</p>
       <p><strong>Innkjøpspris:</strong> {item.Innkjopspris}</p>
-      <p><strong>Forventet Levetid:</strong> {item.ForventetLevetid}</p>
+      <p><strong>Forventet Levetid:</strong> {item.ForventetLevetid.toString()}</p>
       <p><strong>Kategori:</strong> {item.Kategori}</p>
       <p><strong>Utlånt:</strong> {item.Utlånt}</p>
       <p><strong>Lånt av:</strong> {item.Lånt_av}</p>
@@ -17,6 +17,7 @@ const Item = ({ item, onLoanOut, onReturn }: { item: any, onLoanOut: (id: number
           onClick={() => {
             console.log(item)
             const name = prompt('Enter your name:');
+            console.log(name)
             if (name) {
               onLoanOut(item.number, name);
             }
@@ -64,6 +65,7 @@ const InventoryList = () => {
         setItems(prevItems =>
           prevItems.map(item => item.id === id ? { ...item, Utlånt: 'Ja', Lånt_av: name } : item)
         );
+        window.location.reload();
       })
       .catch(error => console.error('An error occurred:', error));
   };
@@ -80,6 +82,7 @@ const InventoryList = () => {
         setItems(prevItems =>
           prevItems.map(item => item.id === id ? { ...item, Utlånt: 'Nei', Lånt_av: 'Tom' } : item)
         );
+        window.location.reload();
       })
       .catch(error => console.error('An error occurred:', error));
   };
@@ -105,7 +108,7 @@ const InventoryList = () => {
 const InventarListe = () => {
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-3xl font-bold text-white mb-4">Inventar List</h1>
+      <h1 className="text-3xl font-bold text-white mb-4 text-center">Inventar List</h1>
       <InventoryList />
     </div>
   );

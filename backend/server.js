@@ -33,6 +33,7 @@ app.get('/getAll', async (req, res) => {
 });
 
 app.post('/loanOut/:id/:name', async (req, res) => {
+  console.log(req.params);
   try {
     const { id, name } = req.params;
     await Utstyr.update({ Utlånt: 'Ja', Lånt_av: name }, { where: { number: id } });

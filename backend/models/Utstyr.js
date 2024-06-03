@@ -40,6 +40,10 @@ module.exports = class Utstyr extends Model {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
             },
+            Lånt_av: {
+                type: DataTypes.STRING,
+                defaultValue: "Tom"
+            }
         },
         {
             tableName: "Utstyr",
