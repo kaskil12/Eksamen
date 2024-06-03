@@ -2,16 +2,28 @@ import { useState, useEffect } from 'react';
 
 const Item = ({ item, onLoanOut, onReturn }: { item: any, onLoanOut: (id: number, name: string) => void, onReturn: (id: number) => void }) => {
   return (
-    <div className="border border-green-500 m-4 p-4 bg-white text-green-800 rounded-lg shadow-md">
-      <p><strong>Produsent:</strong> {item.Produsent}</p>
-      <p><strong>Beskrivelse:</strong> {item.Beskrivelse}</p>
-      <p><strong>Spesifikasjoner:</strong> {item.Spesifikasjoner}</p>
-      <p><strong>Innkjøpsdato:</strong> {item.Innkjopsdato}</p>
-      <p><strong>Innkjøpspris:</strong> {item.Innkjopspris}</p>
-      <p><strong>Forventet Levetid:</strong> {item.ForventetLevetid.toString()}</p>
-      <p><strong>Kategori:</strong> {item.Kategori}</p>
-      <p><strong>Utlånt:</strong> {item.Utlånt}</p>
-      <p><strong>Lånt av:</strong> {item.Lånt_av}</p>
+    <div className="border border-green-900 m-4 p-4 bg-gray-100 text-green-800 rounded-lg shadow-md">
+<div className="font-sans shadow-md bg-gray-100">
+    <h2 className="text-xl font-bold mb-4">Produsent</h2>
+    <p><strong className="font-bold">Produsent:</strong> {item.Produsent}</p>
+
+    <h3 className="text-lg font-bold mt-6 mb-4">Beskrivelse</h3>
+    <p>{item.Beskrivelse}</p>
+
+    <h3 className="text-lg font-bold mt-6 mb-4">Spesifikasjoner</h3>
+    <p>{item.Spesifikasjoner}</p>
+
+    <h3 className="text-lg font-bold mt-6 mb-4">Kjøpsinformasjon</h3>
+    <p><strong className="font-bold">Kjøpsdato:</strong> {item.Innkjopsdato}</p>
+    <p><strong className="font-bold">Kjøpspris:</strong> {item.Innkjopspris}</p>
+    <p><strong className="font-bold">Forventet levetid:</strong> {item.ForventetLevetid.toString()}</p>
+
+    <h3 className="text-lg font-bold mt-6 mb-4">Kategori & Utlånsstatus</h3>
+    <p><strong className="font-bold">Kategori:</strong> {item.Kategori}</p>
+    <p><strong className="font-bold">Utlånt:</strong> {item.Utlånt}</p>
+    <p><strong className="font-bold">Lånt av:</strong> {item.Lånt_av}</p>
+</div>
+
       {item.Utlånt === 'Nei' ? (
         <button
           onClick={() => {
@@ -108,7 +120,7 @@ const InventoryList = () => {
 const InventarListe = () => {
   return (
     <div className="min-h-screen p-8">
-      <h1 className="text-3xl font-bold text-white mb-4 text-center">Inventar List</h1>
+      <h1 className="text-3xl font-bold text-black mb-4 text-center">Inventar List</h1>
       <InventoryList />
     </div>
   );
