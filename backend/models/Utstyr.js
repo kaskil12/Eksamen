@@ -39,7 +39,7 @@ module.exports = class Utstyr extends Model {
             Utlånt: {
                 type: DataTypes.BOOLEAN,
                 defaultValue: false
-            }
+            },
         },
         {
             tableName: "Utstyr",

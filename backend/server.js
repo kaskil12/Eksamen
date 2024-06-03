@@ -22,33 +22,20 @@ async function createAll(data) {
       ForventetLevetid: item.ForlentetLevetid,
       Kategori: item.Kategori,
       Utlånt: item.Utlånt,
+      Lånt_av: item.Lånt_av
     });
   });
 }
 
 app.get('/getAll', async (req, res) => {
-  console.log(await Utstyr.findAll());
-  res.send(await Utstyr.findAll());
+  const allItems = await Utstyr.findAll();
+  res.send(allItems);
 });
 
-app.get('/getAllDevices', async (req, res) => {
+app.post('/loanOut/:id/:name', async (req, res) => {
   try {
-    const devices = await Utstyr.findAll({
-      attributes: ['id', 'Beskrivelse']
-    });
-    res.json(devices);
-  } catch (error) {
-    console.error('Error fetching devices:', error);
-    res.status(500).json({ error: 'Internal server error' });
-  }
-});
-
-app.get('/loanOut/:id', async (req, res) => {
-  try {
-    const deviceId = req.params.id;
-
-    await Utstyr.update({ Utlånt: 'Ja' }, { where: { id: deviceId } });
-
+    const { id, name } = req.params;
+    await Utstyr.update({ Utlånt: 'Ja', Lånt_av: name }, { where: { number: id } });
     res.send({ status: "Device successfully loaned out" });
   } catch (error) {
     console.error('Error loaning out device:', error);
@@ -56,12 +43,10 @@ app.get('/loanOut/:id', async (req, res) => {
   }
 });
 
-app.get('/returnDevice/:id', async (req, res) => {
+app.post('/returnDevice/:id', async (req, res) => {
   try {
-    const deviceId = req.params.id;
-
-    await Utstyr.update({ Utlånt: 'Nei' }, { where: { id: deviceId } });
-
+    const { id } = req.params;
+    await Utstyr.update({ Utlånt: 'Nei', Lånt_av: 'Tom' }, { where: { number: id } });
     res.send({ status: "Device successfully returned" });
   } catch (error) {
     console.error('Error returning device:', error);
@@ -71,16 +56,7 @@ app.get('/returnDevice/:id', async (req, res) => {
 
 app.post('/add', async (req, res) => {
   try {
-    const newDevice = await Utstyr.create({
-      Produsent: req.body.Produsent,
-      Beskrivelse: req.body.Beskrivelse,
-      Spesifikasjoner: req.body.Spesifikasjoner,
-      Innkjopsdato: req.body.Innkjopsdato,
-      Innkjopspris: req.body.Innkjopspris,
-      ForventetLevetid: req.body.ForlentetLevetid,
-      Kategori: req.body.Kategori,
-      Utlånt: req.body.Utlånt,
-    });
+    const newDevice = await Utstyr.create(req.body);
     res.json(newDevice);
   } catch (error) {
     console.error('Error adding device:', error);
