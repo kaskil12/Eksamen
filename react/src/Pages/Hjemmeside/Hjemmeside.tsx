@@ -16,7 +16,7 @@ const Item = ({ item, onLoanOut, onReturn }: { item: any, onLoanOut: (id: number
     <h3 className="text-lg font-bold mt-6 mb-4">Kjøpsinformasjon</h3>
     <p><strong className="font-bold">Kjøpsdato:</strong> {item.Innkjopsdato}</p>
     <p><strong className="font-bold">Kjøpspris:</strong> {item.Innkjopspris}</p>
-    <p><strong className="font-bold">Forventet levetid:</strong> {item.ForventetLevetid.toString()}</p>
+    <p><strong className="font-bold">Forventet levetid:</strong> {item.ForventetLevetid}</p>
 
     <h3 className="text-lg font-bold mt-6 mb-4">Kategori & Utlånsstatus</h3>
     <p><strong className="font-bold">Kategori:</strong> {item.Kategori}</p>

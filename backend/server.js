@@ -19,7 +19,7 @@ async function createAll(data) {
       Spesifikasjoner: item.Spesifikasjoner,
       Innkjopsdato: item.Innkjopsdato,
       Innkjopspris: item.Innkjopspris,
-      ForventetLevetid: item.ForlentetLevetid,
+      ForventetLevetid: item.ForventetLevetid,
       Kategori: item.Kategori,
       Utlånt: item.Utlånt,
       Lånt_av: item.Lånt_av
