@@ -99,13 +99,13 @@ const AdminInventar = () => {
   return (
     <div>
       <div className="flex justify-center">
-      <input
-        type="text"
-        placeholder="Søk..."
-        value={searchTerm}
-        onChange={(event) => setSearchTerm(event.target.value)}
-        className="w-full p-2 mb-4 border border-green-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 max-w-xl"
-      />
+        <input
+          type="text"
+          placeholder="Søk..."
+          value={searchTerm}
+          onChange={(event) => setSearchTerm(event.target.value)}
+          className="w-full p-2 mb-4 border border-green-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 max-w-xl"
+        />
       </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredItems.map((item, index) => (
