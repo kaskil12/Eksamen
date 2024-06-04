@@ -1,15 +1,15 @@
 import { useState, useEffect } from "react";
-import { EnterField } from "../../prefabs/EnterField";
 const Item = ({
   item,
-  onLoanOut,
   onReturn,
 }: {
   item: any;
-  onLoanOut: (id: number, name: string, mobilNummer: string) => void;
   onReturn: (id: number) => void;
 }) => {
-  const [showEnterField, setShowEnterField] = useState(false);
+  function handleReturn(_id: any): void {
+    throw new Error("Function not implemented.");
+  }
+
   return (
     <div className="border border-green-900 m-4 p-4 bg-gray-100 text-green-800 rounded-lg shadow-md">
       <div className="font-sans shadow-md bg-gray-100">
@@ -46,29 +46,11 @@ const Item = ({
         <p>
           <strong className="font-bold">Lånt av:</strong> {item.Lånt_av}
         </p>
+        <p>
+          <strong className="font-bold">Mobil:</strong> {item.Mobil}
+        </p>
       </div>
-
-      {item.Utlånt === "Nei" ? (
-        showEnterField ? (
-          <EnterField
-            onConfirm={(name, mobilnummer) => {
-              console.log(name, mobilnummer);
-              if (name && mobilnummer) {
-                onLoanOut(item.number, name, mobilnummer);
-                setShowEnterField(false);
-              }
-            }}
-            onCancel={() => setShowEnterField(false)}
-          />
-        ) : (
-          <button
-            onClick={() => setShowEnterField(true)}
-            className="mt-2 p-2 bg-red-500 text-white rounded"
-          >
-            Loan Out
-          </button>
-        )
-      ) : (
+      {item.Utlånt === "Ja" && (
         <button
           onClick={() => onReturn(item.number)}
           className="mt-2 p-2 bg-green-500 text-white rounded"
@@ -80,7 +62,7 @@ const Item = ({
   );
 };
 
-const InventoryList = () => {
+const AdminInventar = () => {
   const [items, setItems] = useState<any[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
 
@@ -91,33 +73,12 @@ const InventoryList = () => {
       .catch((error) => console.error("An error occurred:", error));
   }, []);
 
-  const filteredItems = items.filter((item) =>
-    item.Beskrivelse.toLowerCase().includes(searchTerm.toLowerCase())
+  const filteredItems = items.filter(
+    (item) =>
+      item.Mobil.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Lånt_av.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      item.Beskrivelse.toLowerCase().includes(searchTerm.toLowerCase())
   );
-
-  const handleLoanOut = (id: any, name: any, mobilnummer: any) => {
-    fetch(
-      `http://localhost:3000/loanOut/${encodeURIComponent(
-        id
-      )}/${encodeURIComponent(name)}/${encodeURIComponent(mobilnummer)}`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    )
-      .then((response) => response.json())
-      .then(() => {
-        setItems((prevItems) =>
-          prevItems.map((item) =>
-            item.id === id ? { ...item, Utlånt: "Ja", Lånt_av: name } : item
-          )
-        );
-        window.location.reload();
-      })
-      .catch((error) => console.error("An error occurred:", error));
-  };
 
   const handleReturn = (id: any) => {
     fetch(`http://localhost:3000/returnDevice/${encodeURIComponent(id)}`, {
@@ -149,27 +110,22 @@ const InventoryList = () => {
       />
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredItems.map((item, index) => (
-          <Item
-            key={index}
-            item={item}
-            onLoanOut={handleLoanOut}
-            onReturn={handleReturn}
-          />
+          <Item key={index} item={item} onReturn={handleReturn} />
         ))}
       </div>
     </div>
   );
 };
 
-const InventarListe = () => {
+const InventarListeAdmin = () => {
   return (
     <div className="min-h-screen p-8">
       <h1 className="text-3xl font-bold text-black mb-4 text-center">
-        Inventar List
+        Admin Side
       </h1>
-      <InventoryList />
+      <AdminInventar />
     </div>
   );
 };
 
-export default InventarListe;
+export default InventarListeAdmin;

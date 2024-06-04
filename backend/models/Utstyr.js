@@ -43,6 +43,10 @@ module.exports = class Utstyr extends Model {
             Lånt_av: {
                 type: DataTypes.STRING,
                 defaultValue: "Tom"
+            },
+            Mobil: {
+                type: DataTypes.STRING,
+                defaultValue: "Tom"
             }
         },
         {
