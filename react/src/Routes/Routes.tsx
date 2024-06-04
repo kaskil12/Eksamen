@@ -1,7 +1,7 @@
 import { createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import Hjemmeside from "../Pages/Hjemmeside/Hjemmeside";
-import AdminSide from "../Pages/AdminSide/AdminSide";
+import AdminSide from "../Pages/Hjemmeside/AdminSide/AdminSide";
 
 export const router = createBrowserRouter([
   {
