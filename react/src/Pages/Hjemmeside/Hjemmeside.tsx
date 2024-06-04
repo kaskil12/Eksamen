@@ -65,7 +65,7 @@ const Item = ({
             onClick={() => setShowEnterField(true)}
             className="mt-2 p-2 bg-red-500 text-white rounded"
           >
-            Loan Out
+            Utlån
           </button>
         )
       ) : (
@@ -73,7 +73,7 @@ const Item = ({
           onClick={() => onReturn(item.number)}
           className="mt-2 p-2 bg-green-500 text-white rounded"
         >
-          Return
+          Lever Inn
         </button>
       )}
     </div>
@@ -140,13 +140,15 @@ const InventoryList = () => {
 
   return (
     <div>
+      <div className="flex justify-center">
       <input
         type="text"
         placeholder="Search..."
         value={searchTerm}
         onChange={(event) => setSearchTerm(event.target.value)}
-        className="w-full p-2 mb-4 border border-green-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500"
+        className="w-full p-2 mb-4 border border-green-900 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 max-w-xl"
       />
+      </div>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
         {filteredItems.map((item, index) => (
           <Item
