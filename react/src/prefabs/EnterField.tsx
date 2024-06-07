@@ -18,7 +18,7 @@ export function EnterField({ onConfirm, onCancel }: EnterFieldProps) {
 
   const fetchUserData = async (username: string) => {
     try {
-      const response = await fetch(`http://localhost:300/user/${username}`);
+      const response = await fetch(`10.0.0.155/user/${username}`);
       if (response.ok) {
         const userData = await response.json();
         setName(userData.name);

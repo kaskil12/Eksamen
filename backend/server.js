@@ -12,7 +12,7 @@ Utstyr.init(sequelizeDB);
 Users.init(sequelizeDB);
 const data = require("./DATA.json");
 
-app.use(cors({ origin: "http://10.0.0.155" }));
+app.use(cors({ origin: "10.0.0.155" }));
 app.use(express.json());
 app.use(express.static("public"));
 
