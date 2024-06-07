@@ -90,7 +90,7 @@ app.get("/:code", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { username, password, phone } = req.body; // Extract phone number
+  const { username, password, phone } = req.body; 
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
     const newUser = await Users.create({ username, password: hashedPassword, phone });
@@ -131,7 +131,6 @@ app.get("/user/:username", async (req, res) => {
     if (!user) {
       return res.status(404).json({ error: "User not found" });
     }
-    // Assuming you have a field named 'phone' in the Users model
     const userData = { name: user.username, mobilnummer: user.phone };
     res.json(userData);
   } catch (error) {
