@@ -6,7 +6,7 @@ const AdminInventoryList = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("http://10.0.0.155:3000/getAll")
+    fetch("http://10.0.0.155/getAll")
       .then((response) => response.json())
       .then((data) => setItems(data))
       .catch((error) => console.error("An error occurred:", error));
@@ -20,7 +20,7 @@ const AdminInventoryList = () => {
   );
 
   const handleReturn = (id: any) => {
-    fetch(`http://10.0.0.155:3000/returnDevice/${encodeURIComponent(id)}`, {
+    fetch(`http://10.0.0.155/returnDevice/${encodeURIComponent(id)}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
