@@ -6,7 +6,7 @@ const InventoryListHjem = () => {
   const [searchTerm, setSearchTerm] = useState("");
 
   useEffect(() => {
-    fetch("10.0.0.155/getAll")
+    fetch("10.0.0.155:8080/getAll")
       .then((response) => response.json())
       .then((data) => setItems(data))
       .catch((error) => console.error("An error occurred:", error));
@@ -18,7 +18,7 @@ const InventoryListHjem = () => {
 
   const handleLoanOut = (id: any, name: any, mobilnummer: any) => {
     fetch(
-      `10.0.0.155/loanOut/${encodeURIComponent(
+      `10.0.0.155:8080/loanOut/${encodeURIComponent(
         id
       )}/${encodeURIComponent(name)}/${encodeURIComponent(mobilnummer)}`,
       {
@@ -41,7 +41,7 @@ const InventoryListHjem = () => {
   };
 
   const handleReturn = (id: any) => {
-    fetch(`10.0.0.155/returnDevice/${encodeURIComponent(id)}`, {
+    fetch(`10.0.0.155:8080/returnDevice/${encodeURIComponent(id)}`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
