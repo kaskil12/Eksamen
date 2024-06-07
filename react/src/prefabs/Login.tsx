@@ -13,7 +13,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleLogin = async () => {
     try {
-      const response = await fetch("http://10.0.0.155/login", {
+      const response = await fetch("http://10.0.0.155:3000/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
@@ -35,7 +35,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
 
   const handleRegister = async () => {
     try {
-      const response = await fetch("http://10.0.0.155/register", {
+      const response = await fetch("http://10.0.0.155:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, phone }),
