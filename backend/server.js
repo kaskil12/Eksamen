@@ -1,15 +1,22 @@
 const express = require("express");
 const cors = require("cors");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 const app = express();
 const port = 3000;
 const sequelizeDB = require("./database.js");
 const Utstyr = require("./models/Utstyr.js");
+const Users = require("./models/Users.js");
+
 Utstyr.init(sequelizeDB);
+Users.init(sequelizeDB);
 const data = require("./DATA.json");
 
 app.use(cors({ origin: "http://localhost:5173" }));
 app.use(express.json());
 app.use(express.static("public"));
+
+const JWT_SECRET = "your_jwt_secret";
 
 async function createAll(data) {
   data.map((item) => {
@@ -82,9 +89,48 @@ app.get("/:code", async (req, res) => {
   }
 });
 
+app.post("/register", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const hashedPassword = await bcrypt.hash(password, 10);
+    const newUser = await Users.create({ username, password: hashedPassword });
+    res.status(201).json(newUser);
+  } catch (error) {
+    console.error("Error registering user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.post("/login", async (req, res) => {
+  const { username, password } = req.body;
+  try {
+    const user = await Users.findOne({ where: { username } });
+    if (!user) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(401).json({ error: "Invalid credentials" });
+    }
+    const token = jwt.sign(
+      { userId: user.id, isAdmin: user.isAdmin },
+      JWT_SECRET,
+      { expiresIn: "1h" }
+    );
+    res.json({ token, isAdmin: user.isAdmin });
+  } catch (error) {
+    console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
 Utstyr.sync({ force: true })
   .then(() => {
     createAll(data);
+  })
+  .then(() => {
+    Users.sync({ force: true });
+    return Users.initialize();
   })
   .then(() => {
     app.listen(port, () => {

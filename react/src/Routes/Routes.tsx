@@ -1,4 +1,4 @@
-import { createBrowserRouter } from "react-router-dom";
+import { Navigate, createBrowserRouter, useNavigate } from "react-router-dom";
 import App from "../App";
 import Hjemmeside from "../Pages/Hjemmeside/Hjemmeside";
 import AdminSide from "../Pages/AdminSide/AdminSide";
@@ -14,8 +14,12 @@ export const router = createBrowserRouter([
       },
       {
         path: "/admin",
-        element: <AdminSide />,
+        element: isAdmin() ? <AdminSide /> : <Navigate to="/" />,
       },
     ],
   },
 ]);
+
+function isAdmin() {
+  return localStorage.getItem("isAdmin") === "true";
+}
