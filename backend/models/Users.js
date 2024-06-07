@@ -18,6 +18,10 @@ module.exports = class Users extends Model {
           type: DataTypes.BOOLEAN,
           defaultValue: false,
         },
+        phone: {
+          type: DataTypes.STRING,
+          allowNull: true,
+        },
       },
       {
         tableName: "Users",

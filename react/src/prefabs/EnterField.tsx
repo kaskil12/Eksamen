@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 interface EnterFieldProps {
   onConfirm: (name: string, mobilnummer: string) => void;
@@ -8,6 +8,29 @@ interface EnterFieldProps {
 export function EnterField({ onConfirm, onCancel }: EnterFieldProps) {
   const [name, setName] = useState("");
   const [mobilnummer, setMobilnummer] = useState("");
+
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      fetchUserData(storedUsername);
+    }
+  }, []);
+
+  const fetchUserData = async (username: string) => {
+    try {
+      const response = await fetch(`http://localhost:3000/user/${username}`);
+      if (response.ok) {
+        const userData = await response.json();
+        setName(userData.name);
+        setMobilnummer(userData.mobilnummer);
+        onConfirm(userData.name, userData.mobilnummer);
+      } else {
+        console.error("Failed to fetch user data");
+      }
+    } catch (error) {
+      console.error("Error fetching user data:", error);
+    }
+  };
 
   return (
     <>

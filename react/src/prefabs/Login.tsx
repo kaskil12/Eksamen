@@ -7,7 +7,9 @@ interface LoginProps {
 const Login: React.FC<LoginProps> = ({ onLogin }) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [phone, setPhone] = useState(""); // Added state for phone number
   const [isRegister, setIsRegister] = useState(false);
+
 
   const handleLogin = async () => {
     try {
@@ -36,7 +38,7 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
       const response = await fetch("http://localhost:3000/register", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, phone }),
       });
       if (response.ok) {
         alert("Registration successful! You can now log in.");
@@ -73,6 +75,17 @@ const Login: React.FC<LoginProps> = ({ onLogin }) => {
             className="mb-4 p-2 border border-green-900 rounded-lg w-full"
           />
         </div>
+        {isRegister && (
+          <div>
+            <input
+              type="text"
+              placeholder="Phone Number"
+              value={phone}
+              onChange={(e) => setPhone(e.target.value)}
+              className="mb-4 p-2 border border-green-900 rounded-lg w-full"
+            />
+          </div>
+        )}
         <button
           onClick={isRegister ? handleRegister : handleLogin}
           className="p-2 bg-green-500 text-white rounded w-full"

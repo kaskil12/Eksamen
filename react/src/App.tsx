@@ -22,12 +22,14 @@ function App() {
     localStorage.setItem("username", username as string);
     setUsername(username);
     setIsLoggedIn(true);
+    window.location.reload();
   };
 
   const handleLogout = () => {
     localStorage.removeItem("username");
     setUsername("");
     setIsLoggedIn(false);
+    window.location.reload();
   };
 
   return (

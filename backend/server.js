@@ -90,10 +90,10 @@ app.get("/:code", async (req, res) => {
 });
 
 app.post("/register", async (req, res) => {
-  const { username, password } = req.body;
+  const { username, password, phone } = req.body; // Extract phone number
   try {
     const hashedPassword = await bcrypt.hash(password, 10);
-    const newUser = await Users.create({ username, password: hashedPassword });
+    const newUser = await Users.create({ username, password: hashedPassword, phone });
     res.status(201).json(newUser);
   } catch (error) {
     console.error("Error registering user:", error);
@@ -120,6 +120,22 @@ app.post("/login", async (req, res) => {
     res.json({ token, isAdmin: user.isAdmin });
   } catch (error) {
     console.error("Error logging in user:", error);
+    res.status(500).json({ error: "Internal server error" });
+  }
+});
+
+app.get("/user/:username", async (req, res) => {
+  const { username } = req.params;
+  try {
+    const user = await Users.findOne({ where: { username } });
+    if (!user) {
+      return res.status(404).json({ error: "User not found" });
+    }
+    // Assuming you have a field named 'phone' in the Users model
+    const userData = { name: user.username, mobilnummer: user.phone };
+    res.json(userData);
+  } catch (error) {
+    console.error("Error fetching user data:", error);
     res.status(500).json({ error: "Internal server error" });
   }
 });
